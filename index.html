@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juan David García Corchero — Health Economist</title>
-    <meta name="description" content="Academic website of Juan David García Corchero, Assistant Professor of Economics at Universidad de Málaga. Health economics, causal inference, public policy.">
+    <title>Juan David García-Corchero — Applied Economist</title>
+    <meta name="description" content="Academic website of Juan David García-Corchero, Assistant Professor of Economics at the University of Malaga. Applied economics, causal inference, health policy.">
+    <meta name="author" content="Juan David García-Corchero">
+    <meta property="og:title" content="Juan David García-Corchero — Applied Economist">
+    <meta property="og:description" content="Assistant Professor at the University of Malaga. Applied economist specialising in causal inference, health policy, and public economics.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://juandaviz.github.io">
+    <link rel="canonical" href="https://juandaviz.github.io">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -37,7 +43,9 @@
         nav {
             position: sticky;
             top: 0;
-            background: var(--bg);
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border-bottom: 1px solid var(--border);
             z-index: 100;
             padding: 0.9rem 1.5rem;
@@ -58,7 +66,7 @@
             color: var(--text);
             text-decoration: none;
         }
-        nav .links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+        nav .links { display: flex; gap: 1.2rem; flex-wrap: wrap; align-items: center; }
         nav .links a {
             color: var(--muted);
             text-decoration: none;
@@ -67,6 +75,31 @@
             transition: color 0.2s;
         }
         nav .links a:hover { color: var(--accent); }
+
+        /* Language toggle */
+        .lang-toggle {
+            display: inline-flex;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+        .lang-toggle button {
+            padding: 0.2rem 0.55rem;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            font-family: var(--sans);
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .lang-toggle button.active {
+            background: var(--accent);
+            color: #fff;
+        }
+        .lang-toggle button:hover:not(.active) { background: var(--bg-alt); }
 
         /* ---- SECTIONS ---- */
         section {
@@ -99,15 +132,21 @@
         /* ---- HERO / ABOUT ---- */
         .about-grid {
             display: grid;
-            grid-template-columns: 180px 1fr;
+            grid-template-columns: 260px 1fr;
             gap: 2.5rem;
-            align-items: start;
+            align-items: center;
         }
-        .about-grid img {
-            width: 180px;
-            height: 180px;
+        .photo-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .photo-wrap img {
+            width: 260px;
+            height: 260px;
             border-radius: 50%;
             object-fit: cover;
+            object-position: center 30%;
             border: 3px solid var(--border);
         }
         .about-grid .title-line {
@@ -122,6 +161,20 @@
             margin-bottom: 1.2rem;
         }
         .about-grid p { margin-bottom: 0.8rem; }
+        .interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.3rem;
+        }
+        .interests span {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            padding: 0.2rem 0.65rem;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
 
         /* ---- PUBLICATIONS ---- */
         .pub {
@@ -155,6 +208,37 @@
             transition: background 0.2s;
         }
         .pub .doi:hover { background: #eef4f9; }
+        .pub .pub-title-en {
+            font-size: 0.88rem;
+            color: var(--muted);
+            font-style: italic;
+            margin-bottom: 0.2rem;
+        }
+        .pub .abstract-toggle {
+            display: inline-block;
+            margin-top: 0.4rem;
+            margin-left: 0.4rem;
+            font-size: 0.82rem;
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            padding: 0.15rem 0.6rem;
+            border-radius: 3px;
+            color: var(--muted);
+            cursor: pointer;
+            font-family: var(--sans);
+            transition: background 0.2s;
+        }
+        .pub .abstract-toggle:hover { background: #eef4f9; color: var(--accent); }
+        .pub .abstract-text {
+            margin-top: 0.7rem;
+            padding: 0.8rem 1rem;
+            background: var(--bg-alt);
+            border-radius: 4px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text);
+        }
+        .pub .abstract-text.hidden { display: none; }
 
         /* ---- TEACHING ---- */
         .course-list { list-style: none; }
@@ -203,20 +287,32 @@
             border-top: 1px solid var(--border);
         }
 
+        /* ---- BACK TO TOP ---- */
+        .back-top {
+            display: block;
+            text-align: center;
+            padding: 0.6rem;
+            font-size: 0.85rem;
+            color: var(--muted);
+            text-decoration: none;
+        }
+        .back-top:hover { color: var(--accent); }
+
         /* ---- RESPONSIVE ---- */
         @media (max-width: 640px) {
             .about-grid {
                 grid-template-columns: 1fr;
                 text-align: center;
             }
-            .about-grid img {
-                margin: 0 auto;
-                width: 150px;
-                height: 150px;
+            .photo-wrap img {
+                width: 200px;
+                height: 200px;
             }
+            .interests { justify-content: center; }
             nav .inner { justify-content: center; }
             nav .links { justify-content: center; }
             section { padding: 2rem 1.2rem; }
+            .about-grid .title-line { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -225,15 +321,20 @@
 <!-- NAV -->
 <nav>
     <div class="inner">
-        <a href="#about" class="name">J.D. García Corchero</a>
+        <a href="#about" class="name">J.D. García-Corchero</a>
         <div class="links">
-            <a href="#about">About</a>
-            <a href="#research">Research</a>
-            <a href="#teaching">Teaching</a>
-            <a href="#talks">Talks</a>
-            <a href="#code">Data &amp; Code</a>
+            <a href="#about" data-en="About" data-es="Sobre mí">About</a>
+            <a href="#contact" data-en="Contact" data-es="Contacto">Contact</a>
+            <a href="#research" data-en="Research" data-es="Investigación">Research</a>
+            <a href="#teaching" data-en="Teaching" data-es="Docencia">Teaching</a>
+            <a href="#talks" data-en="Talks" data-es="Congresos">Talks</a>
+            <a href="#refereeing" data-en="Refereeing" data-es="Refereeing">Refereeing</a>
+            <a href="#code" data-en="Data &amp; Code" data-es="Datos y Código">Data &amp; Code</a>
             <a href="#cv">CV</a>
-            <a href="#contact">Contact</a>
+            <div class="lang-toggle">
+                <button class="active" onclick="setLang('en')">EN</button>
+                <button onclick="setLang('es')">ES</button>
+            </div>
         </div>
     </div>
 </nav>
@@ -241,114 +342,199 @@
 <!-- ABOUT -->
 <section id="about">
     <div class="about-grid">
-        <img src="photo.jpg" alt="Juan David García Corchero">
+        <div class="photo-wrap">
+            <img src="photo.jpg" alt="Juan David García-Corchero">
+        </div>
         <div>
-            <div class="title-line">Juan David García Corchero</div>
-            <div class="subtitle">Assistant Professor of Economics, Universidad de Málaga</div>
-            <p>
-                I am a health economist studying how institutional design and public policy shape access, quality, and equity in healthcare systems. My research uses causal inference methods — difference-in-differences, event studies, and panel data techniques — to evaluate reforms in publicly funded health systems.
+            <div class="title-line">Juan David García-Corchero</div>
+            <div class="subtitle" data-en="Assistant Professor of Economics, University of Malaga" data-es="Profesor Ayudante Doctor de Economía, Universidad de Málaga">Assistant Professor of Economics, University of Malaga</div>
+            <p data-en="I am an applied economist using causal inference to answer policy-relevant questions in health and public economics. My work exploits natural experiments, difference-in-differences, and event-study designs to evaluate how institutional reforms shape access, equity, and quality in publicly funded health systems." data-es="Soy un economista aplicado que utiliza inferencia causal para responder preguntas relevantes de política sanitaria y economía pública. Mi trabajo explota experimentos naturales, diferencias en diferencias y diseños de event-study para evaluar cómo las reformas institucionales condicionan el acceso, la equidad y la calidad en los sistemas sanitarios públicos.">
+                I am an applied economist using causal inference to answer policy-relevant questions in health and public economics. My work exploits natural experiments, difference-in-differences, and event-study designs to evaluate how institutional reforms shape access, equity, and quality in publicly funded health systems.
             </p>
-            <p>
-                I hold a PhD in Economics from the University of Granada (2023) and was a visiting researcher at the London School of Economics. Before joining UMA, I was a postdoctoral researcher at the University of Granada.
+            <p data-en="PhD in Economics from the University of Granada (2023), visiting researcher at the London School of Economics." data-es="Doctor en Economía por la Universidad de Granada (2023), investigador visitante en la London School of Economics.">
+                PhD in Economics from the University of Granada (2023), visiting researcher at the London School of Economics.
             </p>
-            <p>
-                <strong>Research interests:</strong> Health economics, health policy evaluation, causal inference, public economics.
-            </p>
+            <div class="interests">
+                <span>Applied Economics</span>
+                <span>Causal Inference</span>
+                <span>Health Policy</span>
+                <span>Public Economics</span>
+                <span>Equity</span>
+                <span>DiD &amp; Event Studies</span>
+            </div>
         </div>
     </div>
 </section>
 
+<!-- CONTACT -->
+<section id="contact">
+    <h2 data-en="Contact" data-es="Contacto">Contact</h2>
+    <ul class="contact-links">
+        <li><strong>Email:</strong> <a href="mailto:jdcorchero@uma.es">jdcorchero@uma.es</a></li>
+        <li><strong>ORCID:</strong> <a href="https://orcid.org/0000-0001-7689-570X" target="_blank" rel="noopener">0000-0001-7689-570X</a></li>
+        <li><strong>Google Scholar:</strong> <a href="https://scholar.google.com/citations?user=qxuBKOsAAAAJ&hl=en" target="_blank" rel="noopener">Profile</a></li>
+        <li><strong>GitHub:</strong> <a href="https://github.com/juandaviz" target="_blank" rel="noopener">juandaviz</a></li>
+        <li><strong>X / Twitter:</strong> <a href="https://x.com/juandtweet" target="_blank" rel="noopener">@juandtweet</a></li>
+        <li>
+            <strong data-en="Address:" data-es="Dirección:">Address:</strong> Departamento de Economía Aplicada (Hacienda Pública),
+            Facultad de Ciencias Económicas y Empresariales,
+            Universidad de Málaga, 29071 Málaga, Spain
+        </li>
+    </ul>
+</section>
+
 <!-- RESEARCH -->
 <section id="research">
-    <h2>Research</h2>
+    <h2 data-en="Research" data-es="Investigación">Research</h2>
 
-    <h3>Published</h3>
+    <h3 data-en="Published" data-es="Publicaciones">Published</h3>
 
     <div class="pub">
         <div class="pub-title">Waiting times in healthcare: equal treatment for equal need?</div>
         <div class="pub-authors">Juan David García-Corchero &amp; Dolores Jiménez-Rubio</div>
         <div class="pub-venue">International Journal for Equity in Health, 21, 184 (2022)</div>
         <a class="doi" href="https://doi.org/10.1186/s12939-022-01799-x" target="_blank" rel="noopener">DOI: 10.1186/s12939-022-01799-x</a>
+        <button class="abstract-toggle" onclick="this.nextElementSibling.classList.toggle('hidden'); this.textContent = this.nextElementSibling.classList.contains('hidden') ? 'Show abstract' : 'Hide abstract'">Hide abstract</button>
+        <div class="abstract-text">In many universal health systems, waiting times act as a non-monetary rationing mechanism, one that should be based on clinical need rather than the ability to pay. However, there is growing evidence that among patients with similar levels of need, waiting times often differ according to socioeconomic status. Using Spanish data, we examine whether waiting times for primary and specialist care depend on patients' socioeconomic status (SES) and employ quantile regression to explore variations across the waiting time distribution. Our results reveal the presence of a SES gradient in waiting times for specialist services explained on the basis of education, employment status and income. For primary care, a more moderate SES gradient appears. Although SES differences diminish for longer waiting times in the public sector, they persist throughout the distribution. The findings indicate that the principle of equal treatment for equal need, assumed to be inherent to national health systems such as the Spanish system, is not applied in practice.</div>
     </div>
 
     <div class="pub">
-        <div class="pub-title">How do policy levers shape the quality of a health system? An empirical analysis</div>
+        <div class="pub-title">How do policy levers shape the quality of a national health system? An empirical analysis</div>
         <div class="pub-authors">Juan David García-Corchero &amp; Dolores Jiménez-Rubio</div>
         <div class="pub-venue">Journal of Policy Modeling, 44(1), 203–221 (2022)</div>
         <a class="doi" href="https://doi.org/10.1016/j.jpolmod.2021.09.003" target="_blank" rel="noopener">DOI: 10.1016/j.jpolmod.2021.09.003</a>
+        <button class="abstract-toggle" onclick="this.nextElementSibling.classList.toggle('hidden'); this.textContent = this.nextElementSibling.classList.contains('hidden') ? 'Show abstract' : 'Hide abstract'">Hide abstract</button>
+        <div class="abstract-text">Poor quality of care may have a detrimental effect on access and take-up and can become a serious barrier to the universality of health services. Using patient satisfaction as a proxy for the quality of health care and longitudinal and cross-sectional data for Spain, we employ multilevel estimation techniques to show that policy levers — particularly public health spending and the patient-doctor ratio — exert considerable influence on the quality of a health care system. The results suggest that policymakers seeking to enhance the quality of care should be cautious when compromising the level of health resources, particularly health personnel, as a response to economic downturns. We also find evidence that increased private sector reliance may indicate inefficiencies in public healthcare systems or reflect patient preferences for private insurance features.</div>
     </div>
 
-    <h3>Working Papers</h3>
+    <h3 data-en="Working Papers" data-es="Documentos de Trabajo">Working Papers</h3>
+
+    <div class="pub">
+        <div class="pub-title">The effect of patient choice on health care utilisation</div>
+        <div class="pub-authors">Joan Costa-Font &amp; Juan David García-Corchero</div>
+        <div class="pub-venue" data-en="Work in progress" data-es="En preparación">Work in progress</div>
+    </div>
+
+    <div class="pub">
+        <div class="pub-title">Does patient choice affect patient involvement?</div>
+        <div class="pub-authors">Joan Costa-Font, Juan David García-Corchero &amp; Danielle Subsataya</div>
+        <div class="pub-venue" data-en="Work in progress" data-es="En preparación">Work in progress</div>
+    </div>
 
     <div class="pub">
         <div class="pub-title">Political demand for healthcare after austerity</div>
         <div class="pub-authors">Joan Costa-Font, Juan David García-Corchero &amp; Dolores Jiménez-Rubio</div>
-        <div class="pub-venue">Work in progress</div>
+        <div class="pub-venue" data-en="Work in progress" data-es="En preparación">Work in progress</div>
     </div>
 
     <div class="pub">
-        <div class="pub-title">Does patient choice affect patient involvement and health outcomes?</div>
-        <div class="pub-authors">Joan Costa-Font, Juan David García-Corchero &amp; Daniele Ferrazza Subsataya</div>
-        <div class="pub-venue">Work in progress</div>
+        <div class="pub-title">The socioeconomic gradient in waiting times for patient choice</div>
+        <div class="pub-authors">Ángel Fernández-Pérez &amp; Juan David García-Corchero</div>
+        <div class="pub-venue" data-en="Work in progress" data-es="En preparación">Work in progress</div>
     </div>
 
     <div class="pub">
         <div class="pub-title">Reporting bias and prompt attention in health surveys</div>
-        <div class="pub-authors">Juan David García-Corchero, Dolores Jiménez-Rubio &amp; Juan de Dios Vidris</div>
-        <div class="pub-venue">Work in progress</div>
+        <div class="pub-authors">Juan David García-Corchero, Dolores Jiménez-Rubio &amp; Juan Vidris</div>
+        <div class="pub-venue" data-en="Work in progress" data-es="En preparación">Work in progress</div>
     </div>
 
-    <h3>Grants &amp; Projects</h3>
-    <p>
+    <div class="pub">
+        <div class="pub-title">The effect of fasting on academic performance among Muslim students</div>
+        <div class="pub-authors">Alessio Gaggero &amp; Juan David García-Corchero</div>
+        <div class="pub-venue" data-en="Work in progress" data-es="En preparación">Work in progress</div>
+    </div>
+
+    <h3 data-en="Policy Writing &amp; Outreach" data-es="Divulgación">Policy Writing &amp; Outreach</h3>
+
+    <div class="pub">
+        <div class="pub-title"><a href="https://nadaesgratis.es/admin/tiempos-de-espera-en-sanidad-1-igual-trato-para-la-misma-necesidad" target="_blank" rel="noopener">Tiempos de espera en sanidad (1): ¿Igual trato para la misma necesidad?</a></div>
+        <div class="pub-title-en">Healthcare waiting times (1): Equal treatment for equal need?</div>
+        <div class="pub-authors">Juan David García-Corchero, Dolores Jiménez-Rubio &amp; Laia Bosque-Mercader</div>
+        <div class="pub-venue">Nada es Gratis, May 2023</div>
+        <div class="pub-authors" style="margin-top: 0.3rem; color: var(--text);">Evidence of a socioeconomic gradient in waiting times for specialist care in Spain: university-educated patients wait 9–16 fewer days than those without formal education.</div>
+    </div>
+
+    <div class="pub">
+        <div class="pub-title"><a href="https://nadaesgratis.es/admin/tiempos-de-espera-en-sanidad-2-desigualdad-tambien-en-cirugias-programadas" target="_blank" rel="noopener">Tiempos de espera en sanidad (2): ¿Desigualdad también en cirugías programadas?</a></div>
+        <div class="pub-title-en">Healthcare waiting times (2): Inequality in scheduled surgeries too?</div>
+        <div class="pub-authors">Laia Bosque-Mercader &amp; Juan David García-Corchero</div>
+        <div class="pub-venue">Nada es Gratis, May 2023</div>
+        <div class="pub-authors" style="margin-top: 0.3rem; color: var(--text);">Analysis of administrative data from Catalan hospitals (2015–2019) showing that higher-income patients experience shorter surgical waits in 8 of 10 procedures — within the same hospitals.</div>
+    </div>
+
+    <div class="pub">
+        <div class="pub-title"><a href="https://www.aes.es/blog/2023/08/30/una-evaluacion-de-la-calidad-y-la-equidad-del-sistema-nacional-de-salud-desde-la-perspectiva-de-los-pacientes/" target="_blank" rel="noopener">Una evaluación de la calidad y la equidad del SNS desde la perspectiva de los pacientes</a></div>
+        <div class="pub-title-en">Assessing quality and equity in the Spanish NHS from the patient perspective</div>
+        <div class="pub-authors">Juan David García-Corchero</div>
+        <div class="pub-venue">Blog Economía y Salud (AES), August 2023</div>
+        <div class="pub-authors" style="margin-top: 0.3rem; color: var(--text);">Summary of my doctoral thesis: how healthcare policy instruments influence citizen satisfaction and how socioeconomic inequalities shape access in Spain's decentralised health system.</div>
+    </div>
+
+    <div class="pub">
+        <div class="pub-title"><a href="https://www.aes.es/blog/2024/11/27/beca-aes-2023-que-hay-detras-de-las-desigualdades-en-los-tiempos-de-espera-de-la-sanidad-publica/" target="_blank" rel="noopener">¿Qué hay detrás de las desigualdades en los tiempos de espera de la sanidad pública?</a></div>
+        <div class="pub-title-en">What lies behind waiting time inequalities in public healthcare?</div>
+        <div class="pub-authors">Juan David García-Corchero &amp; Laia Bosque-Mercader</div>
+        <div class="pub-venue">Blog Economía y Salud (AES), November 2024</div>
+        <div class="pub-authors" style="margin-top: 0.3rem; color: var(--text);">Preliminary findings from the EQUIMEC project: demand-side and supply-side mechanisms behind waiting time inequalities, with evidence that Madrid's free provider choice policy may have reduced disparities for lower-income patients.</div>
+    </div>
+
+    <h3 data-en="Grants &amp; Projects" data-es="Proyectos y Financiación">Grants &amp; Projects</h3>
+    <p data-en="&lt;strong&gt;EQUIMEC Project&lt;/strong&gt; — Principal Investigator. Funded by AES (Asociación de Economía de la Salud) &amp; Novartis Foundation." data-es="&lt;strong&gt;Proyecto EQUIMEC&lt;/strong&gt; — Investigador Principal. Financiado por AES (Asociación de Economía de la Salud) y Fundación Novartis.">
         <strong>EQUIMEC Project</strong> — Principal Investigator. Funded by AES (Asociación de Economía de la Salud) &amp; Novartis Foundation.
     </p>
 </section>
 
 <!-- TEACHING -->
 <section id="teaching">
-    <h2>Teaching</h2>
+    <h2 data-en="Teaching" data-es="Docencia">Teaching</h2>
 
-    <h3>Universidad de Málaga (2024–present)</h3>
+    <h3 data-en="University of Malaga (2024–present)" data-es="Universidad de Málaga (2024–actualidad)">University of Malaga (2024–present)</h3>
     <ul class="course-list">
         <li>
-            Hacienda Pública I (Public Finance I)
-            <span class="year">— Grado en Economía, 2024–25, 2025–26</span>
+            Hacienda Pública I<br>
+            <span class="year" style="font-style: italic; color: var(--muted);">Public Finance I</span>
+            <span class="year">— BSc in Economics, 2024–25, 2025–26</span>
         </li>
         <li>
-            Hacienda Pública II (Public Finance II)
-            <span class="year">— Grado en Economía, 2024–25, 2025–26</span>
+            Hacienda Pública II<br>
+            <span class="year" style="font-style: italic; color: var(--muted);">Public Finance II</span>
+            <span class="year">— BSc in Economics, 2024–25, 2025–26</span>
         </li>
         <li>
-            Economía de los Ingresos Públicos (Economics of Public Revenue)
-            <span class="year">— Máster en Profesorado (MAES), 2025–26</span>
+            Economía de los Ingresos Públicos<br>
+            <span class="year" style="font-style: italic; color: var(--muted);">Economics of Public Revenue</span>
+            <span class="year">— MA in Economic Analysis (MAES), 2025–26</span>
         </li>
     </ul>
 
-    <h3>Universidad de Granada (2019–2023)</h3>
+    <h3 data-en="University of Granada (2019–2023)" data-es="Universidad de Granada (2019–2023)">University of Granada (2019–2023)</h3>
     <ul class="course-list">
         <li>
-            Economía Española (Spanish Economy)
-            <span class="year">— Grado en Economía, 2019–2023</span>
+            Economía Española<br>
+            <span class="year" style="font-style: italic; color: var(--muted);">Spanish Economy</span>
+            <span class="year">— BSc in Economics, 2019–2023</span>
         </li>
         <li>
-            Hacienda Pública I (Public Finance I)
-            <span class="year">— Grado en Economía, 2022–2023</span>
+            Hacienda Pública I<br>
+            <span class="year" style="font-style: italic; color: var(--muted);">Public Finance I</span>
+            <span class="year">— BSc in Economics, 2022–2023</span>
         </li>
     </ul>
 
-    <h3>Teaching Tools</h3>
-    <p>
-        <a href="https://juandaviz.github.io/simulador-eip/" target="_blank" rel="noopener">Tax Simulator for Public Revenue</a> — An interactive simulator for teaching tax incidence and public revenue concepts (in Spanish).
+    <h3 data-en="Teaching Tools" data-es="Herramientas Docentes">Teaching Tools</h3>
+    <p data-en='&lt;a href="https://juandaviz.github.io/simulador-eip/" target="_blank" rel="noopener"&gt;Tax Simulator for Public Revenue&lt;/a&gt; — An interactive simulator for teaching tax incidence and public revenue concepts.' data-es='&lt;a href="https://juandaviz.github.io/simulador-eip/" target="_blank" rel="noopener"&gt;Simulador de Ingresos Públicos&lt;/a&gt; — Simulador interactivo para la enseñanza de la incidencia impositiva y los ingresos públicos.'>
+        <a href="https://juandaviz.github.io/simulador-eip/" target="_blank" rel="noopener">Tax Simulator for Public Revenue</a> — An interactive simulator for teaching tax incidence and public revenue concepts.
     </p>
 </section>
 
 <!-- TALKS -->
 <section id="talks">
-    <h2>Talks &amp; Conferences</h2>
+    <h2 data-en="Talks &amp; Conferences" data-es="Congresos y Seminarios">Talks &amp; Conferences</h2>
     <ul class="talk-list">
         <li>
             AES Annual Conference (Asociación de Economía de la Salud)
-            <span class="talk-where">— Multiple editions</span>
+            <span class="talk-where" data-en="— Multiple editions" data-es="— Varias ediciones">— Multiple editions</span>
         </li>
         <li>
             EuHEA Conference (European Health Economics Association)
@@ -364,19 +550,30 @@
         </li>
         <li>
             EvaluAES Workshop
-            <span class="talk-where">— Evaluation methods in health economics</span>
+            <span class="talk-where" data-en="— Evaluation methods in health economics" data-es="— Métodos de evaluación en economía de la salud">— Evaluation methods in health economics</span>
         </li>
         <li>
             AESEC Conference (Asociación Española de Salud y Economía)
-            <span class="talk-where">— Coordinator &amp; organiser</span>
+            <span class="talk-where" data-en="— Coordinator &amp; organiser" data-es="— Coordinador y organizador">— Coordinator &amp; organiser</span>
         </li>
+    </ul>
+</section>
+
+<!-- REFEREEING -->
+<section id="refereeing">
+    <h2 data-en="Refereeing" data-es="Evaluación de artículos">Refereeing</h2>
+    <p data-en="Reviewer for:" data-es="Revisor para:">Reviewer for:</p>
+    <ul class="course-list" style="margin-top: 0.5rem;">
+        <li>Value in Health</li>
+        <li>Journal of Economic Behavior &amp; Organization</li>
+        <li>Health Policy &amp; Planning</li>
     </ul>
 </section>
 
 <!-- DATA & CODE -->
 <section id="code">
-    <h2>Data &amp; Code</h2>
-    <p>
+    <h2 data-en="Data &amp; Code" data-es="Datos y Código">Data &amp; Code</h2>
+    <p data-en="My research relies primarily on Stata for econometric analysis and Python for data processing. Replication code for published papers is available upon request." data-es="Mi investigación utiliza principalmente Stata para el análisis econométrico y Python para el procesamiento de datos. El código de replicación de los artículos publicados está disponible previa solicitud.">
         My research relies primarily on Stata for econometric analysis and Python for data processing. Replication code for published papers is available upon request.
     </p>
     <p style="margin-top: 1rem;">
@@ -385,7 +582,7 @@
     <ul class="course-list" style="margin-top: 0.8rem;">
         <li>
             <a href="https://github.com/juandaviz/simulador-eip" target="_blank" rel="noopener">simulador-eip</a>
-            — Interactive tax simulator for teaching public economics (JavaScript)
+            <span data-en="— Interactive tax simulator for teaching public economics (JavaScript)" data-es="— Simulador interactivo de impuestos para la enseñanza de la economía pública (JavaScript)">— Interactive tax simulator for teaching public economics (JavaScript)</span>
         </li>
     </ul>
 </section>
@@ -394,37 +591,42 @@
 <section id="cv">
     <h2>Curriculum Vitae</h2>
 
-    <h3>Education</h3>
+    <h3 data-en="Education" data-es="Formación Académica">Education</h3>
     <ul class="course-list">
-        <li>PhD in Economics <span class="year">— University of Granada, 2023. Visiting researcher, LSE (2022)</span></li>
-        <li>MSc in Economics <span class="year">— University of Granada, 2019</span></li>
-        <li>BSc in Economics <span class="year">— University of Granada, 2015</span></li>
+        <li>PhD in Economics <span class="year" data-en="— University of Granada, 2023. Visiting researcher, LSE (2022)" data-es="— Universidad de Granada, 2023. Investigador visitante, LSE (2022)">— University of Granada, 2023. Visiting researcher, LSE (2022)</span></li>
+        <li>MSc in Economics <span class="year" data-en="— University of Granada, 2019" data-es="— Universidad de Granada, 2019">— University of Granada, 2019</span></li>
+        <li>BSc in Economics <span class="year" data-en="— University of Granada, 2015" data-es="— Universidad de Granada, 2015">— University of Granada, 2015</span></li>
     </ul>
 
     <p style="margin-top: 2rem;">
-        <a href="cv.pdf" class="btn" target="_blank" rel="noopener">Download Full CV (PDF)</a>
+        <a href="cv.pdf" class="btn" target="_blank" rel="noopener" data-en="Download Full CV (PDF)" data-es="Descargar CV Completo (PDF)">Download Full CV (PDF)</a>
     </p>
 </section>
 
-<!-- CONTACT -->
-<section id="contact">
-    <h2>Contact</h2>
-    <ul class="contact-links">
-        <li><strong>Email:</strong> <a href="mailto:jdcorchero@uma.es">jdcorchero@uma.es</a></li>
-        <li><strong>ORCID:</strong> <a href="https://orcid.org/0000-0002-1534-4705" target="_blank" rel="noopener">0000-0002-1534-4705</a></li>
-        <li><strong>Google Scholar:</strong> <a href="https://scholar.google.es/citations?user=EWpLT_YAAAAJ" target="_blank" rel="noopener">Profile</a></li>
-        <li><strong>GitHub:</strong> <a href="https://github.com/juandaviz" target="_blank" rel="noopener">juandaviz</a></li>
-        <li>
-            <strong>Address:</strong> Departamento de Economía Aplicada (Hacienda Pública),
-            Facultad de Ciencias Económicas y Empresariales,
-            Universidad de Málaga, 29071 Málaga, Spain
-        </li>
-    </ul>
-</section>
 
 <footer>
-    &copy; 2025 Juan David García Corchero
+    <a href="#about" class="back-top" data-en="Back to top" data-es="Volver arriba">Back to top</a>
+    &copy; 2025 Juan David García-Corchero
 </footer>
+
+<script>
+function setLang(lang) {
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.lang-toggle button').forEach(function(b) {
+        b.classList.toggle('active', b.textContent === lang.toUpperCase());
+    });
+    document.querySelectorAll('[data-' + lang + ']').forEach(function(el) {
+        var val = el.getAttribute('data-' + lang);
+        if (el.tagName === 'A' && el.classList.contains('btn')) {
+            el.textContent = val;
+        } else if (el.children.length === 0 || el.getAttribute('data-en') === el.textContent || el.getAttribute('data-es') === el.textContent) {
+            el.textContent = val;
+        } else {
+            el.innerHTML = val;
+        }
+    });
+}
+</script>
 
 </body>
 </html>
